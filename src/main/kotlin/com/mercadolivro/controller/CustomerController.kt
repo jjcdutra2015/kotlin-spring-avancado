@@ -2,6 +2,7 @@ package com.mercadolivro.controller
 
 import com.mercadolivro.controller.request.PostCustomerRequest
 import com.mercadolivro.model.CustomerModel
+import org.springframework.http.HttpStatus.CREATED
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -14,6 +15,7 @@ class CustomerController {
     }
 
     @PostMapping
+    @ResponseStatus(CREATED)
     fun create(@RequestBody customer: PostCustomerRequest) {
         println(customer)
     }
