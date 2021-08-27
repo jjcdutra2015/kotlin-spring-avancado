@@ -13,7 +13,7 @@ data class PurchaseModel(
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
-    val customerModel: CustomerModel,
+    val customer: CustomerModel,
 
     @ManyToMany
     @JoinTable(
@@ -30,5 +30,5 @@ data class PurchaseModel(
     val price: BigDecimal,
 
     @Column(name = "created_at")
-    val createdAt: LocalDateTime
+    val createdAt: LocalDateTime = LocalDateTime.now()
 )
