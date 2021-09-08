@@ -5,4 +5,5 @@ import org.springframework.data.repository.CrudRepository
 
 interface PurchaseRepository : CrudRepository<PurchaseModel, Int> {
 
+    fun findAllByCustomerId(id: Int): List<PurchaseModel>
 }
