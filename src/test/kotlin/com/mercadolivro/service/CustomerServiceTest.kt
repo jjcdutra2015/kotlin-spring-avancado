@@ -9,7 +9,7 @@ import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 import io.mockk.verify
-import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
@@ -32,18 +32,31 @@ class CustomerServiceTest {
 
     @Test
     fun `should return all customers`() {
-        val fakeCustomers = listOf(builCustomer(), builCustomer())
-
+        val fakeCustomers = listOf(buildCustomer(), buildCustomer())
         every { customerRepository.findAll() } returns fakeCustomers
 
         val customers = customerService.getAll(null)
 
-        Assertions.assertEquals(fakeCustomers, customers)
+        assertEquals(fakeCustomers, customers)
         verify(exactly = 1) { customerRepository.findAll() }
         verify(exactly = 0) { customerRepository.findByNameContaining(any()) }
     }
 
-    private fun builCustomer(
+    @Test
+    fun `should return customer when name is informed`() {
+        val name = UUID.randomUUID().toString()
+
+        val fakeCustomers = listOf(buildCustomer(), buildCustomer())
+        every { customerRepository.findByNameContaining(name) } returns fakeCustomers
+
+        val customers = customerService.getAll(name)
+
+        assertEquals(fakeCustomers, customers)
+        verify(exactly = 0) { customerRepository.findAll() }
+        verify(exactly = 1) { customerRepository.findByNameContaining(name) }
+    }
+
+    private fun buildCustomer(
         id: Int? = null,
         name: String = "customer name",
         email: String = "${UUID.randomUUID()}@email.com",
