@@ -33,7 +33,7 @@ class CustomerServiceTest {
     @Test
     fun `should return all customers`() {
         val fakeCustomers = listOf(buildCustomer(), buildCustomer())
-        every { customerRepository.findAll() } returns fakeCustomers
+        every { customerRepository.findAll()  } returns fakeCustomers
 
         val customers = customerService.getAll(null)
 
